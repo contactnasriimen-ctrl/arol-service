@@ -7,7 +7,7 @@
   <meta name="description" content="ARoL Service informs a caller about the roaming callee's current country and local time, and lets the caller assume roaming charges. Patented in 20 countries across 4 continents.">
   <!-- Preview on GitHub Pages: remove noindex once the site moves to arolservice.com -->
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#072746">
+  <meta name="theme-color" content="#04060b">
   <meta property="og:type" content="website">
   <meta property="og:title" content="ARoL Service – Limiting calls at inconvenient times">
   <meta property="og:description" content="Informing the caller about the roaming callee's current location and the local time there.">
@@ -15,208 +15,208 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,600;1,700&family=Roboto:wght@300;400;500&display=swap">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
-  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
+  <div class="intro" aria-hidden="true">
+    <span class="logo-gold intro__logo"></span>
+    <span class="intro__line"></span>
+  </div>
+  <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="grain" aria-hidden="true"></div>
+
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Announcement bar -->
-  <div class="topbar">
-    <div class="topbar__track">
-      <p class="topbar__item">
-        <img src="assets/img/logo-arol-light.png" alt="" width="66" height="28">
-        <span>Thanks for visiting ARoL Service <b><i>EXPRESS</i></b> Website … It's a <b><i>5-minutes</i></b> browsing Website …</span>
-      </p>
-      <p class="topbar__item" aria-hidden="true">
-        <img src="assets/img/logo-arol-light.png" alt="" width="66" height="28">
-        <span>Thanks for visiting ARoL Service <b><i>EXPRESS</i></b> Website … It's a <b><i>5-minutes</i></b> browsing Website …</span>
-      </p>
-      <p class="topbar__item" aria-hidden="true">
-        <img src="assets/img/logo-arol-light.png" alt="" width="66" height="28">
-        <span>Thanks for visiting ARoL Service <b><i>EXPRESS</i></b> Website … It's a <b><i>5-minutes</i></b> browsing Website …</span>
-      </p>
-      <p class="topbar__item" aria-hidden="true">
-        <img src="assets/img/logo-arol-light.png" alt="" width="66" height="28">
-        <span>Thanks for visiting ARoL Service <b><i>EXPRESS</i></b> Website … It's a <b><i>5-minutes</i></b> browsing Website …</span>
-      </p>
+  <!-- Announcement bar + header -->
+  <div class="site-top" data-site-top>
+    <div class="topbar">
+      <div class="topbar__track">
+        <p class="topbar__item">Thanks for visiting ARoL Service <b>EXPRESS</b> Website … It's a <b>5-minutes</b> browsing Website …</p>
+        <p class="topbar__item" aria-hidden="true">Thanks for visiting ARoL Service <b>EXPRESS</b> Website … It's a <b>5-minutes</b> browsing Website …</p>
+        <p class="topbar__item" aria-hidden="true">Thanks for visiting ARoL Service <b>EXPRESS</b> Website … It's a <b>5-minutes</b> browsing Website …</p>
+        <p class="topbar__item" aria-hidden="true">Thanks for visiting ARoL Service <b>EXPRESS</b> Website … It's a <b>5-minutes</b> browsing Website …</p>
+      </div>
     </div>
-  </div>
-
-  <!-- Header -->
-  <div class="header-shell">
-    <header class="header" id="site-header">
+    <header class="header">
       <div class="container header__inner">
         <a class="header__brand" href="#home" aria-label="ARoL Service – home">
-          <img src="assets/img/logo-arol.png" alt="ARoL Service" width="271" height="113">
+          <span class="logo-gold header__logo"></span>
         </a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
-          <span></span><span></span><span></span>
-        </button>
-        <nav class="nav" id="site-nav" aria-label="Main">
+        <nav class="nav" aria-label="Main">
           <a href="#home">Home</a>
           <a href="#description">ARoL Description</a>
           <a href="#benefits">ARoL Benefits</a>
           <a href="#patents">Patent Footprint</a>
           <a href="#agreements">ARoL Business Agreements</a>
-          <a href="#contact">Contact us …</a>
         </nav>
+        <a class="btn btn--ghost btn--sm header__cta" href="#contact">Contact us …</a>
+        <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu" data-burger>
+          <span></span><span></span>
+        </button>
       </div>
     </header>
   </div>
 
+  <!-- Mobile menu -->
+  <div class="menu" id="menu" data-menu>
+    <nav class="menu__nav" aria-label="Mobile">
+      <a href="#home" style="--i:0">Home</a>
+      <a href="#description" style="--i:1">ARoL Description</a>
+      <a href="#benefits" style="--i:2">ARoL Benefits</a>
+      <a href="#patents" style="--i:3">Patent Footprint</a>
+      <a href="#agreements" style="--i:4">ARoL Business Agreements</a>
+      <a href="#contact" style="--i:5">Contact us …</a>
+    </nav>
+    <p class="menu__foot">info@arolservice.com</p>
+  </div>
+
   <main id="main">
 
-    <!-- Hero slider -->
-    <section class="hero" id="home" aria-roledescription="carousel" aria-label="ARoL Service highlights" data-slider>
-      <div class="hero__slides">
+    <!-- Hero -->
+    <section class="hero" id="home" aria-roledescription="carousel" aria-label="ARoL Service highlights">
+      <img class="hero__fallback" src="assets/img/globe.svg" alt="" width="520" height="520">
+      <canvas class="hero__canvas" data-globe aria-hidden="true"></canvas>
 
-        <article class="slide slide--night is-active" aria-roledescription="slide" aria-label="1 of 3">
-          <div class="slide__bg" aria-hidden="true">
-            <div class="art-stars"></div>
-            <div class="art-moon"></div>
-            <svg class="art-phone" viewBox="0 0 300 600" focusable="false">
-              <defs>
-                <linearGradient id="phScreen" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#14406f"/>
-                  <stop offset="1" stop-color="#061a33"/>
-                </linearGradient>
-                <radialGradient id="phGlow" cx=".5" cy=".5" r=".5">
-                  <stop offset="0" stop-color="#6fa8ff" stop-opacity=".4"/>
-                  <stop offset="1" stop-color="#6fa8ff" stop-opacity="0"/>
-                </radialGradient>
-                <path id="phHandset" d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/>
-              </defs>
-              <ellipse cx="150" cy="300" rx="200" ry="320" fill="url(#phGlow)"/>
-              <rect x="20" y="10" width="260" height="580" rx="40" fill="#0b0d12" stroke="#2c3442" stroke-width="2"/>
-              <rect x="32" y="22" width="236" height="556" rx="30" fill="url(#phScreen)"/>
-              <rect x="114" y="36" width="72" height="20" rx="10" fill="#0b0d12"/>
-              <text x="150" y="104" class="ph-muted">Calling…</text>
-              <text x="150" y="138" class="ph-name">Adam</text>
-              <rect x="52" y="166" width="196" height="236" rx="18" fill="#ffffff" fill-opacity=".07" stroke="#ffffff" stroke-opacity=".16"/>
-              <circle cx="96" cy="194" r="7" fill="none" stroke="#8fb8ff" stroke-width="1.6"/>
-              <path d="M89 194h14M96 187c-3 4-3 10 0 14M96 187c3 4 3 10 0 14" fill="none" stroke="#8fb8ff" stroke-width="1.2"/>
-              <text x="160" y="199" class="ph-brand">ARoL Service</text>
-              <text x="150" y="236" class="ph-label">ROAMING IN</text>
-              <text x="150" y="266" class="ph-country">Japan</text>
-              <line x1="82" y1="286" x2="218" y2="286" stroke="#ffffff" stroke-opacity=".14"/>
-              <text x="150" y="312" class="ph-label">LOCAL TIME</text>
-              <text x="150" y="366" class="ph-time">03:12</text>
-              <text x="150" y="390" class="ph-muted">AM · Tokyo</text>
-              <circle cx="95" cy="478" r="30" fill="#e5484d"/>
-              <use href="#phHandset" fill="#fff" transform="translate(95 478) rotate(135) translate(-12 -12)"/>
-              <circle cx="205" cy="478" r="30" fill="#2fbf71"/>
-              <use href="#phHandset" fill="#fff" transform="translate(193 466)"/>
-              <text x="95" y="532" class="ph-small">Hang up</text>
-              <text x="205" y="532" class="ph-small">Call anyway</text>
-            </svg>
-            <img class="slide__photo" src="assets/img/slide-1.jpg" alt="" onerror="this.remove()">
-          </div>
-          <div class="container container--wide slide__inner">
-            <div class="slide__card slide__card--dark">
-              <img class="slide__logo" src="assets/img/logo-arol-light.png" alt="" width="277" height="119">
-              <h1 class="slide__title">Limiting calls at inconvenient times</h1>
-              <p class="slide__text">Informing the caller about the roaming callee's current location and the local time there.</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="slide slide--voices" aria-roledescription="slide" aria-label="2 of 3" aria-hidden="true" inert>
-          <div class="slide__bg" aria-hidden="true">
-            <div class="art-mosaic" data-mosaic></div>
-            <ul class="art-bubbles">
-              <li style="--x:8%;--y:16%;--d:0s">Hello</li>
-              <li style="--x:44%;--y:9%;--d:-1.2s" lang="fr">Bonjour</li>
-              <li style="--x:72%;--y:22%;--d:-2.4s" lang="ar" dir="rtl">مرحبا</li>
-              <li style="--x:22%;--y:42%;--d:-.6s" lang="es">Hola</li>
-              <li style="--x:58%;--y:46%;--d:-3s" lang="zh">你好</li>
-              <li style="--x:6%;--y:64%;--d:-1.8s" lang="tr">Merhaba</li>
-              <li style="--x:44%;--y:84%;--d:-2.8s" lang="hi">नमस्ते</li>
-              <li style="--x:74%;--y:70%;--d:-.9s" lang="pt">Olá</li>
-            </ul>
-            <img class="slide__photo" src="assets/img/slide-2.jpg" alt="" onerror="this.remove()">
-          </div>
-          <div class="container container--wide slide__inner">
-            <div class="slide__card">
-              <img class="slide__logo" src="assets/img/logo-arol.png" alt="" width="271" height="113">
-              <h2 class="slide__title">Optional service – respecting privacy</h2>
-              <p class="slide__text">Voice messaging the caller in the common languages of the country the Mobile Operator is servicing.</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="slide slide--globe" aria-roledescription="slide" aria-label="3 of 3" aria-hidden="true" inert>
-          <div class="slide__bg" aria-hidden="true">
-            <div class="art-streaks"></div>
-            <img class="art-globe" src="assets/img/globe.svg" alt="" width="520" height="520">
-            <img class="slide__photo" src="assets/img/slide-3.jpg" alt="" onerror="this.remove()">
-          </div>
-          <div class="container container--wide slide__inner">
-            <div class="slide__card">
-              <img class="slide__logo" src="assets/img/logo-arol.png" alt="" width="271" height="113">
-              <h2 class="slide__title">Patent footprint<br> in 4 continents <small>(24 filings)</small></h2>
-              <p class="slide__text">Global recognition with 20 granted patents across 20 countries</p>
-            </div>
-          </div>
-        </article>
-
+      <div class="hero__floats" aria-hidden="true">
+        <div class="float float--call" style="--depth:1">
+          <p class="float__head"><span class="float__dot"></span>ARoL Service</p>
+          <p class="float__label">Roaming in</p>
+          <p class="float__country">Japan</p>
+          <p class="float__time">
+            <svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+            <b>03:12</b><span>AM · local time</span>
+          </p>
+          <p class="float__actions"><span class="chip chip--end">Hang up</span><span class="chip chip--go">Call anyway</span></p>
+        </div>
+        <div class="float float--pay" style="--depth:1.8">
+          <span class="float__check"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <p><strong>Caller assumes roaming charges</strong><span>Callee receives the call free of charge</span></p>
+        </div>
+        <div class="float float--lang" style="--depth:1.35">
+          <span class="float__wave"><i></i><i></i><i></i><i></i></span>
+          <p><span lang="en">Hello</span> · <span lang="fr">Bonjour</span> · <span lang="ar">مرحبا</span> · <span lang="es">Hola</span></p>
+        </div>
       </div>
 
-      <button class="hero__arrow hero__arrow--prev" type="button" aria-label="Previous slide" data-prev>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
-      </button>
-      <button class="hero__arrow hero__arrow--next" type="button" aria-label="Next slide" data-next>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-      </button>
-      <div class="hero__dots" role="group" aria-label="Choose slide">
-        <button type="button" aria-label="Slide 1" aria-current="true"></button>
-        <button type="button" aria-label="Slide 2"></button>
-        <button type="button" aria-label="Slide 3"></button>
+      <div class="container hero__content">
+        <div class="hero__text">
+          <p class="eyebrow eyebrow--hero">ARoL Service</p>
+          <div class="taglines" data-taglines>
+            <div class="tagline is-active" aria-roledescription="slide" aria-label="1 of 3">
+              <h1>Limiting calls at <em>inconvenient times</em></h1>
+              <p>Informing the caller about the roaming callee's current location and the local time there.</p>
+            </div>
+            <div class="tagline" aria-roledescription="slide" aria-label="2 of 3">
+              <h2>Optional service – <em>respecting privacy</em></h2>
+              <p>Voice messaging the caller in the common languages of the country the Mobile Operator is servicing.</p>
+            </div>
+            <div class="tagline" aria-roledescription="slide" aria-label="3 of 3">
+              <h2>Patent footprint in <em>4 continents</em> <small>(24 filings)</small></h2>
+              <p>Global recognition with 20 granted patents across 20 countries</p>
+            </div>
+          </div>
+          <div class="hero__actions">
+            <a class="btn btn--gold" href="#description"><span>Discover the service</span></a>
+            <a class="btn btn--ghost" href="#agreements">Business agreements</a>
+          </div>
+          <div class="pager">
+            <button class="round" type="button" aria-label="Previous message" data-prev>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+            </button>
+            <p class="pager__count"><b data-current>01</b><span>/ 03</span></p>
+            <span class="pager__bar"><i data-progress></i></span>
+            <button class="round" type="button" aria-label="Next message" data-next>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#figures" aria-label="Scroll to content"><span>Scroll</span><i></i></a>
+    </section>
+
+    <!-- Key figures -->
+    <section class="figures" id="figures" aria-label="Key figures">
+      <div class="container figures__grid" data-stagger>
+        <div class="figure reveal"><span class="figure__num" data-count="24">24</span><span class="figure__label">Patent filings</span></div>
+        <div class="figure reveal"><span class="figure__num" data-count="20">20</span><span class="figure__label">Granted patents</span></div>
+        <div class="figure reveal"><span class="figure__num" data-count="20">20</span><span class="figure__label">Countries</span></div>
+        <div class="figure reveal"><span class="figure__num" data-count="4">4</span><span class="figure__label">Continents</span></div>
       </div>
     </section>
 
     <!-- Description -->
     <section class="section" id="description">
       <div class="container">
-        <h2 class="section__title">ARoL Service Description</h2>
-        <div class="desc">
-          <div class="desc__col reveal">
-            <h3>at its basic level …</h3>
+        <header class="section-head reveal">
+          <p class="eyebrow">01 — The service</p>
+          <h2 class="display">ARoL Service <em>Description</em></h2>
+        </header>
+        <div class="levels" data-stagger>
+          <article class="panel level reveal" data-tilt>
+            <span class="level__numeral" aria-hidden="true">I</span>
+            <h3>at its <em>basic</em> level …</h3>
             <p>A caller – attempting to reach a roaming callee (ARoL subscriber) – is informed about the roaming country and the local time there. No matter if the caller and the callee are subscribers of the same Mobile Operator or not.</p>
-          </div>
-          <div class="desc__col reveal">
-            <h3>at its advanced level …</h3>
+            <ul class="tags"><li>Roaming country</li><li>Local time</li><li>Any operator</li></ul>
+          </article>
+          <article class="panel level reveal" data-tilt>
+            <span class="level__numeral" aria-hidden="true">II</span>
+            <h3>at its <em>advanced</em> level …</h3>
             <p>Additionally, the caller is offered the option of assuming roaming charges, allowing the callee to receive the call free of charge – provided that both <i>(the caller and the callee)</i> are subscribers of the same Mobile Operator.</p>
-          </div>
+            <ul class="tags"><li>Caller pays roaming</li><li>Free for the callee</li><li>Same operator</li></ul>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- Benefits -->
-    <section class="section section--pattern" id="benefits">
+    <section class="section section--benefits" id="benefits">
       <div class="container">
-        <h2 class="section__title">ARoL Service Benefits</h2>
-        <div class="benefits reveal">
-          <div class="benefits__col benefits__col--callers">
-            <div class="benefit benefit--left">
-              <strong>For The Caller</strong>
-              <em>(From The Same Operator)</em>
+        <header class="section-head reveal">
+          <p class="eyebrow">02 — Value for everyone</p>
+          <h2 class="display">ARoL Service <em>Benefits</em></h2>
+        </header>
+        <div class="orbit-stage reveal">
+          <div class="orbit">
+            <div class="orbit__ring"></div>
+            <div class="orbit__ring orbit__ring--outer"></div>
+            <div class="orbit__core">
+              <div class="core">
+                <strong>For The Operator</strong>
+                <em>(Offering ARoL Service)</em>
+              </div>
             </div>
-            <div class="benefit benefit--left">
-              <strong>For The Caller</strong>
-              <em>(From Other Operator)</em>
-            </div>
-          </div>
-          <div class="benefit benefit--operator">
-            <strong>For The Operator</strong>
-            <em>(Offering ARoL Service)</em>
-          </div>
-          <div class="benefits__col">
-            <div class="benefit benefit--right">
-              <strong>For The Callee</strong>
-              <em>(Subscribed to ARoL Service)</em>
+            <div class="orbit__spin">
+              <div class="orbit__node" style="--a:90deg">
+                <div class="orbit__counter"><div class="orbit__face">
+                  <div class="satellite">
+                    <span class="satellite__icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></span>
+                    <strong>For The Caller</strong>
+                    <em>(From The Same Operator)</em>
+                  </div>
+                </div></div>
+              </div>
+              <div class="orbit__node" style="--a:210deg">
+                <div class="orbit__counter"><div class="orbit__face">
+                  <div class="satellite">
+                    <span class="satellite__icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></span>
+                    <strong>For The Caller</strong>
+                    <em>(From Other Operator)</em>
+                  </div>
+                </div></div>
+              </div>
+              <div class="orbit__node" style="--a:330deg">
+                <div class="orbit__counter"><div class="orbit__face">
+                  <div class="satellite satellite--callee">
+                    <span class="satellite__icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></span>
+                    <strong>For The Callee</strong>
+                    <em>(Subscribed to ARoL Service)</em>
+                  </div>
+                </div></div>
+              </div>
             </div>
           </div>
         </div>
@@ -226,214 +226,266 @@
     <!-- Patent footprint -->
     <section class="section" id="patents">
       <div class="container">
-        <h2 class="section__title">ARoL Service Patent Footprint</h2>
-        <p class="section__hint">Hover or tap a country to see its patent status.</p>
-        <ul class="legend" aria-label="Status legend">
-          <li data-s="force">Patent in Force</li>
-          <li data-s="certificate">Patent Certificate</li>
-          <li data-s="filing">Patent Filing</li>
-          <li data-s="publication">Publication</li>
-          <li data-s="maintenance">Maintenance</li>
-        </ul>
+        <header class="section-head reveal">
+          <p class="eyebrow">03 — Intellectual property</p>
+          <h2 class="display">ARoL Service <em>Patent Footprint</em></h2>
+        </header>
 
-        <ul class="patents">
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Algeria</span>
-            <span class="patent__row"><span class="patent__flag fi fi-dz"></span><span class="patent__office"><b>INAPI</b><span>Institut National Algérien de la Propriété Industrielle</span></span></span>
-            <ul class="patent__status"><li data-s="filing">Patent Filing</li><li data-s="maintenance">Maintenance</li></ul>
+        <div class="filters reveal" role="group" aria-label="Filter by region">
+          <button type="button" aria-pressed="true" data-filter="all">All <span>26</span></button>
+          <button type="button" aria-pressed="false" data-filter="europe">Europe <span>12</span></button>
+          <button type="button" aria-pressed="false" data-filter="asia">Asia <span>6</span></button>
+          <button type="button" aria-pressed="false" data-filter="africa">Africa <span>5</span></button>
+          <button type="button" aria-pressed="false" data-filter="americas">Americas <span>2</span></button>
+          <button type="button" aria-pressed="false" data-filter="intl">International <span>1</span></button>
+        </div>
+
+        <ul class="pgrid" data-stagger>
+          <li class="pcard reveal" data-region="africa" data-tilt>
+            <span class="pcard__flag fi fi-dz"></span>
+            <div class="pcard__body"><h3>Algeria</h3><p><b>INAPI</b> Institut National Algérien de la Propriété Industrielle</p></div>
+            <ul class="status"><li data-s="filing">Patent Filing</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Belgium</span>
-            <span class="patent__row"><span class="patent__flag fi fi-be"></span><span class="patent__office"><b>FPS Economy</b><span>Office de la Propriété Intellectuelle</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-be"></span>
+            <div class="pcard__body"><h3>Belgium</h3><p><b>FPS Economy</b> Office de la Propriété Intellectuelle</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Canada</span>
-            <span class="patent__row"><span class="patent__flag fi fi-ca"></span><span class="patent__office"><b>CIPO</b><span>Canadian Intellectual Property Office</span></span></span>
-            <ul class="patent__status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="americas" data-tilt>
+            <span class="pcard__flag fi fi-ca"></span>
+            <div class="pcard__body"><h3>Canada</h3><p><b>CIPO</b> Canadian Intellectual Property Office</p></div>
+            <ul class="status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">China</span>
-            <span class="patent__row"><span class="patent__flag fi fi-cn"></span><span class="patent__office"><b>CNIPA</b><span>China National Intellectual Property Administration</span></span></span>
-            <ul class="patent__status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="asia" data-tilt>
+            <span class="pcard__flag fi fi-cn"></span>
+            <div class="pcard__body"><h3>China</h3><p><b>CNIPA</b> China National Intellectual Property Administration</p></div>
+            <ul class="status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Egypt</span>
-            <span class="patent__row"><span class="patent__flag fi fi-eg"></span><span class="patent__office"><b>EGPO</b><span>Egyptian Patent Office</span></span></span>
-            <ul class="patent__status"><li data-s="filing">Patent Filing</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="africa" data-tilt>
+            <span class="pcard__flag fi fi-eg"></span>
+            <div class="pcard__body"><h3>Egypt</h3><p><b>EGPO</b> Egyptian Patent Office</p></div>
+            <ul class="status"><li data-s="filing">Patent Filing</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Europe</span>
-            <span class="patent__row"><span class="patent__flag fi fi-eu"></span><span class="patent__office"><b>EPO</b><span>European Patent Office</span></span></span>
-            <ul class="patent__status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-eu"></span>
+            <div class="pcard__body"><h3>Europe</h3><p><b>EPO</b> European Patent Office</p></div>
+            <ul class="status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">France</span>
-            <span class="patent__row"><span class="patent__flag fi fi-fr"></span><span class="patent__office"><b>INPI</b><span>Institut National de la Propriété Industrielle</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-fr"></span>
+            <div class="pcard__body"><h3>France</h3><p><b>INPI</b> Institut National de la Propriété Industrielle</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Germany</span>
-            <span class="patent__row"><span class="patent__flag fi fi-de"></span><span class="patent__office"><b>DPMA</b><span>Deutsches Patent- und Markenamt</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-de"></span>
+            <div class="pcard__body"><h3>Germany</h3><p><b>DPMA</b> Deutsches Patent- und Markenamt</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">India</span>
-            <span class="patent__row"><span class="patent__flag fi fi-in"></span><span class="patent__office"><b>IP India</b><span>Intellectual Property India</span></span></span>
-            <ul class="patent__status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="asia" data-tilt>
+            <span class="pcard__flag fi fi-in"></span>
+            <div class="pcard__body"><h3>India</h3><p><b>IP India</b> Intellectual Property India</p></div>
+            <ul class="status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Ireland</span>
-            <span class="patent__row"><span class="patent__flag fi fi-ie"></span><span class="patent__office"><b>IPOI</b><span>Intellectual Property Office of Ireland</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-ie"></span>
+            <div class="pcard__body"><h3>Ireland</h3><p><b>IPOI</b> Intellectual Property Office of Ireland</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Italy</span>
-            <span class="patent__row"><span class="patent__flag fi fi-it"></span><span class="patent__office"><b>UIBM</b><span>Ufficio Italiano Brevetti e Marchi</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-it"></span>
+            <div class="pcard__body"><h3>Italy</h3><p><b>UIBM</b> Ufficio Italiano Brevetti e Marchi</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Kuwait</span>
-            <span class="patent__row"><span class="patent__flag fi fi-kw"></span><span class="patent__office"><b>MOCI</b><span>Ministry of Commerce and Industry</span></span></span>
-            <ul class="patent__status"><li data-s="filing">Patent Filing</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="asia" data-tilt>
+            <span class="pcard__flag fi fi-kw"></span>
+            <div class="pcard__body"><h3>Kuwait</h3><p><b>MOCI</b> Ministry of Commerce and Industry</p></div>
+            <ul class="status"><li data-s="filing">Patent Filing</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Morocco</span>
-            <span class="patent__row"><span class="patent__flag fi fi-ma"></span><span class="patent__office"><b>OMPIC</b><span>Office Marocain de la Propriété Industrielle et Commerciale</span></span></span>
-            <ul class="patent__status"><li data-s="certificate">Patent Certificate</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="africa" data-tilt>
+            <span class="pcard__flag fi fi-ma"></span>
+            <div class="pcard__body"><h3>Morocco</h3><p><b>OMPIC</b> Office Marocain de la Propriété Industrielle et Commerciale</p></div>
+            <ul class="status"><li data-s="certificate">Patent Certificate</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Portugal</span>
-            <span class="patent__row"><span class="patent__flag fi fi-pt"></span><span class="patent__office"><b>INPI</b><span>Instituto Nacional da Propriedade Industrial</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-pt"></span>
+            <div class="pcard__body"><h3>Portugal</h3><p><b>INPI</b> Instituto Nacional da Propriedade Industrial</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Qatar</span>
-            <span class="patent__row"><span class="patent__flag fi fi-qa"></span><span class="patent__office"><b>MOCI</b><span>Ministry of Commerce and Industry</span></span></span>
-            <ul class="patent__status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="asia" data-tilt>
+            <span class="pcard__flag fi fi-qa"></span>
+            <div class="pcard__body"><h3>Qatar</h3><p><b>MOCI</b> Ministry of Commerce and Industry</p></div>
+            <ul class="status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Saudi Arabia</span>
-            <span class="patent__row"><span class="patent__flag fi fi-sa"></span><span class="patent__office"><b>SAIP</b><span>Saudi Authority for Intellectual Property</span></span></span>
-            <ul class="patent__status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="asia" data-tilt>
+            <span class="pcard__flag fi fi-sa"></span>
+            <div class="pcard__body"><h3>Saudi Arabia</h3><p><b>SAIP</b> Saudi Authority for Intellectual Property</p></div>
+            <ul class="status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">South Africa</span>
-            <span class="patent__row"><span class="patent__flag fi fi-za"></span><span class="patent__office"><b>CIPC</b><span>Companies and Intellectual Property Commission</span></span></span>
-            <ul class="patent__status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="africa" data-tilt>
+            <span class="pcard__flag fi fi-za"></span>
+            <div class="pcard__body"><h3>South Africa</h3><p><b>CIPC</b> Companies and Intellectual Property Commission</p></div>
+            <ul class="status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Spain</span>
-            <span class="patent__row"><span class="patent__flag fi fi-es"></span><span class="patent__office"><b>OEPM</b><span>Oficina Española de Patentes y Marcas</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-es"></span>
+            <div class="pcard__body"><h3>Spain</h3><p><b>OEPM</b> Oficina Española de Patentes y Marcas</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Sweden</span>
-            <span class="patent__row"><span class="patent__flag fi fi-se"></span><span class="patent__office"><b>PRV</b><span>Swedish Intellectual Property Office</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-se"></span>
+            <div class="pcard__body"><h3>Sweden</h3><p><b>PRV</b> Swedish Intellectual Property Office</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Switzerland</span>
-            <span class="patent__row"><span class="patent__flag fi fi-ch"></span><span class="patent__office"><b>IGE | IPI</b><span>Swiss Federal Institute of Intellectual Property</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-ch"></span>
+            <div class="pcard__body"><h3>Switzerland</h3><p><b>IGE | IPI</b> Swiss Federal Institute of Intellectual Property</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Tunisia</span>
-            <span class="patent__row"><span class="patent__flag fi fi-tn"></span><span class="patent__office"><b>INNORPI</b><span>Institut National de la Normalisation et de la Propriété Industrielle</span></span></span>
-            <ul class="patent__status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="africa" data-tilt>
+            <span class="pcard__flag fi fi-tn"></span>
+            <div class="pcard__body"><h3>Tunisia</h3><p><b>INNORPI</b> Institut National de la Normalisation et de la Propriété Industrielle</p></div>
+            <ul class="status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">Turkey</span>
-            <span class="patent__row"><span class="patent__flag fi fi-tr"></span><span class="patent__office"><b>TÜRKPATENT</b><span>Turkish Patent and Trademark Office</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-tr"></span>
+            <div class="pcard__body"><h3>Turkey</h3><p><b>TÜRKPATENT</b> Turkish Patent and Trademark Office</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">UAE</span>
-            <span class="patent__row"><span class="patent__flag fi fi-ae"></span><span class="patent__office"><b>MoE</b><span>United Arab Emirates Ministry of Economy</span></span></span>
-            <ul class="patent__status"><li data-s="filing">Patent Filing</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="asia" data-tilt>
+            <span class="pcard__flag fi fi-ae"></span>
+            <div class="pcard__body"><h3>UAE</h3><p><b>MoE</b> United Arab Emirates Ministry of Economy</p></div>
+            <ul class="status"><li data-s="filing">Patent Filing</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">UK</span>
-            <span class="patent__row"><span class="patent__flag fi fi-gb"></span><span class="patent__office"><b>UK IPO</b><span>Intellectual Property Office</span></span></span>
-            <ul class="patent__status"><li data-s="force">Patent in Force</li></ul>
+          <li class="pcard reveal" data-region="europe" data-tilt>
+            <span class="pcard__flag fi fi-gb"></span>
+            <div class="pcard__body"><h3>UK</h3><p><b>UK IPO</b> Intellectual Property Office</p></div>
+            <ul class="status"><li data-s="force">Patent in Force</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">USA</span>
-            <span class="patent__row"><span class="patent__flag fi fi-us"></span><span class="patent__office"><b>USPTO</b><span>United States Patent and Trademark Office</span></span></span>
-            <ul class="patent__status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
+          <li class="pcard reveal" data-region="americas" data-tilt>
+            <span class="pcard__flag fi fi-us"></span>
+            <div class="pcard__body"><h3>USA</h3><p><b>USPTO</b> United States Patent and Trademark Office</p></div>
+            <ul class="status"><li data-s="certificate">Patent Certificate</li><li data-s="publication">Publication</li><li data-s="maintenance">Maintenance</li></ul>
           </li>
-          <li class="patent" tabindex="0">
-            <span class="patent__country">WIPO</span>
-            <span class="patent__row">
-              <span class="patent__flag patent__flag--mosaic"><span class="fi fi-un"></span><span class="fi fi-us"></span><span class="fi fi-cn"></span><span class="fi fi-eu"></span><span class="fi fi-sa"></span><span class="fi fi-in"></span><span class="fi fi-za"></span><span class="fi fi-tn"></span><span class="fi fi-ca"></span></span>
-              <span class="patent__office"><b>WIPO</b><span>World Intellectual Property Organization</span></span>
-            </span>
-            <ul class="patent__status"><li data-s="publication">Publication</li></ul>
+          <li class="pcard reveal" data-region="intl" data-tilt>
+            <span class="pcard__flag pcard__flag--mosaic"><span class="fi fi-un"></span><span class="fi fi-us"></span><span class="fi fi-cn"></span><span class="fi fi-eu"></span><span class="fi fi-sa"></span><span class="fi fi-in"></span><span class="fi fi-za"></span><span class="fi fi-tn"></span><span class="fi fi-ca"></span></span>
+            <div class="pcard__body"><h3>WIPO</h3><p><b>WIPO</b> World Intellectual Property Organization</p></div>
+            <ul class="status"><li data-s="publication">Publication</li></ul>
           </li>
         </ul>
       </div>
     </section>
 
     <!-- Business agreements -->
-    <section class="section section--pattern" id="agreements">
+    <section class="section section--cards" id="agreements">
       <div class="container">
-        <h2 class="section__title">ARoL Service Business Agreements</h2>
-        <div class="deals">
-          <article class="deal reveal" tabindex="0">
-            <div class="deal__inner">
-              <div class="deal__face deal__front">
-                <img src="assets/img/logo-arol.png" alt="" width="271" height="113">
-                <h3><span>EXCLUSIVE</span> Ownership Rights</h3>
-                <span class="deal__hint">Details</span>
-              </div>
-              <div class="deal__face deal__back">
-                <p class="deal__kind">EXCLUSIVE Ownership Rights</p>
-                <p>Only one Mobile Operator will have the privilege to offer ARoL service in the market it operates in, after acquiring <b>EXCLUSIVE</b> Ownership Rights.</p>
-                <p class="deal__note deal__note--no">No other Business Agreement could co-exist.</p>
+        <header class="section-head reveal">
+          <p class="eyebrow">04 — Partnership</p>
+          <h2 class="display">ARoL Service <em>Business Agreements</em></h2>
+        </header>
+
+        <div class="cards" data-stagger>
+          <article class="lux-card lux-card--black reveal">
+            <div class="lux-card__tilt">
+              <div class="lux-card__inner">
+                <div class="lux-card__face lux-card__front">
+                  <span class="lux-card__sheen"></span>
+                  <div class="lux-card__top">
+                    <span class="logo-gold lux-card__logo"></span>
+                    <svg class="lux-card__nfc" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 7.5a6.5 6.5 0 0 1 0 9M12 5a10 10 0 0 1 0 14M15.5 2.5a13.5 13.5 0 0 1 0 19M5 10a3 3 0 0 1 0 4"/></svg>
+                  </div>
+                  <span class="lux-card__chip"></span>
+                  <div class="lux-card__bottom">
+                    <h3><span class="lux-card__type">EXCLUSIVE</span><span class="lux-card__name">Ownership Rights</span></h3>
+                    <span class="lux-card__hint">Details</span>
+                  </div>
+                </div>
+                <div class="lux-card__face lux-card__back">
+                  <span class="lux-card__stripe"></span>
+                  <p class="lux-card__kind">EXCLUSIVE Ownership Rights</p>
+                  <p>Only one Mobile Operator will have the privilege to offer ARoL service in the market it operates in, after acquiring <b>EXCLUSIVE</b> Ownership Rights.</p>
+                  <p class="lux-card__note lux-card__note--no">No other Business Agreement could co-exist.</p>
+                </div>
               </div>
             </div>
+            <button class="lux-card__toggle" type="button" aria-pressed="false"><span class="sr-only">Show details: EXCLUSIVE Ownership Rights</span></button>
           </article>
-          <article class="deal reveal" tabindex="0">
-            <div class="deal__inner">
-              <div class="deal__face deal__front">
-                <img src="assets/img/logo-arol.png" alt="" width="271" height="113">
-                <h3><span>Non-EXCLUSIVE</span> Ownership Rights</h3>
-                <span class="deal__hint">Details</span>
-              </div>
-              <div class="deal__face deal__back">
-                <p class="deal__kind">Non-EXCLUSIVE Ownership Rights</p>
-                <p>A Mobile Operator may offer ARoL service in the market it operates in, after acquiring Ownership Rights for this.</p>
-                <p class="deal__note deal__note--yes">Non-EXCLUSIVE Licensing Rights Business Agreement could co-exist.</p>
+
+          <article class="lux-card lux-card--platinum reveal">
+            <div class="lux-card__tilt">
+              <div class="lux-card__inner">
+                <div class="lux-card__face lux-card__front">
+                  <span class="lux-card__sheen"></span>
+                  <div class="lux-card__top">
+                    <img class="lux-card__logo-img" src="assets/img/logo-arol.png" alt="" width="271" height="113">
+                    <svg class="lux-card__nfc" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 7.5a6.5 6.5 0 0 1 0 9M12 5a10 10 0 0 1 0 14M15.5 2.5a13.5 13.5 0 0 1 0 19M5 10a3 3 0 0 1 0 4"/></svg>
+                  </div>
+                  <span class="lux-card__chip"></span>
+                  <div class="lux-card__bottom">
+                    <h3><span class="lux-card__type">Non-EXCLUSIVE</span><span class="lux-card__name">Ownership Rights</span></h3>
+                    <span class="lux-card__hint">Details</span>
+                  </div>
+                </div>
+                <div class="lux-card__face lux-card__back">
+                  <span class="lux-card__stripe"></span>
+                  <p class="lux-card__kind">Non-EXCLUSIVE Ownership Rights</p>
+                  <p>A Mobile Operator may offer ARoL service in the market it operates in, after acquiring Ownership Rights for this.</p>
+                  <p class="lux-card__note lux-card__note--yes">Non-EXCLUSIVE Licensing Rights Business Agreement could co-exist.</p>
+                </div>
               </div>
             </div>
+            <button class="lux-card__toggle" type="button" aria-pressed="false"><span class="sr-only">Show details: Non-EXCLUSIVE Ownership Rights</span></button>
           </article>
-          <article class="deal reveal" tabindex="0">
-            <div class="deal__inner">
-              <div class="deal__face deal__front">
-                <img src="assets/img/logo-arol.png" alt="" width="271" height="113">
-                <h3><span>EXCLUSIVE</span> Licensing Rights</h3>
-                <span class="deal__hint">Details</span>
-              </div>
-              <div class="deal__face deal__back">
-                <p class="deal__kind">EXCLUSIVE Licensing Rights</p>
-                <p>Only one Mobile Operator will have the privilege to offer ARoL service in the market it operates in, with quarterly <b>EXCLUSIVE</b> Licensing Rights fees.</p>
-                <p class="deal__note deal__note--no">No other Business Agreement could co-exist.</p>
+
+          <article class="lux-card lux-card--black reveal">
+            <div class="lux-card__tilt">
+              <div class="lux-card__inner">
+                <div class="lux-card__face lux-card__front">
+                  <span class="lux-card__sheen"></span>
+                  <div class="lux-card__top">
+                    <span class="logo-gold lux-card__logo"></span>
+                    <svg class="lux-card__nfc" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 7.5a6.5 6.5 0 0 1 0 9M12 5a10 10 0 0 1 0 14M15.5 2.5a13.5 13.5 0 0 1 0 19M5 10a3 3 0 0 1 0 4"/></svg>
+                  </div>
+                  <span class="lux-card__chip"></span>
+                  <div class="lux-card__bottom">
+                    <h3><span class="lux-card__type">EXCLUSIVE</span><span class="lux-card__name">Licensing Rights</span></h3>
+                    <span class="lux-card__hint">Details</span>
+                  </div>
+                </div>
+                <div class="lux-card__face lux-card__back">
+                  <span class="lux-card__stripe"></span>
+                  <p class="lux-card__kind">EXCLUSIVE Licensing Rights</p>
+                  <p>Only one Mobile Operator will have the privilege to offer ARoL service in the market it operates in, with quarterly <b>EXCLUSIVE</b> Licensing Rights fees.</p>
+                  <p class="lux-card__note lux-card__note--no">No other Business Agreement could co-exist.</p>
+                </div>
               </div>
             </div>
+            <button class="lux-card__toggle" type="button" aria-pressed="false"><span class="sr-only">Show details: EXCLUSIVE Licensing Rights</span></button>
           </article>
-          <article class="deal reveal" tabindex="0">
-            <div class="deal__inner">
-              <div class="deal__face deal__front">
-                <img src="assets/img/logo-arol.png" alt="" width="271" height="113">
-                <h3><span>Non-EXCLUSIVE</span> Licensing Rights</h3>
-                <span class="deal__hint">Details</span>
-              </div>
-              <div class="deal__face deal__back">
-                <p class="deal__kind">Non-EXCLUSIVE Licensing Rights</p>
-                <p>A Mobile Operator may offer ARoL service in the market it operates in, with quarterly Licensing Rights fees.</p>
-                <p class="deal__note deal__note--yes">Non-EXCLUSIVE Ownership Rights Business Agreement could co-exist.</p>
+
+          <article class="lux-card lux-card--platinum reveal">
+            <div class="lux-card__tilt">
+              <div class="lux-card__inner">
+                <div class="lux-card__face lux-card__front">
+                  <span class="lux-card__sheen"></span>
+                  <div class="lux-card__top">
+                    <img class="lux-card__logo-img" src="assets/img/logo-arol.png" alt="" width="271" height="113">
+                    <svg class="lux-card__nfc" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 7.5a6.5 6.5 0 0 1 0 9M12 5a10 10 0 0 1 0 14M15.5 2.5a13.5 13.5 0 0 1 0 19M5 10a3 3 0 0 1 0 4"/></svg>
+                  </div>
+                  <span class="lux-card__chip"></span>
+                  <div class="lux-card__bottom">
+                    <h3><span class="lux-card__type">Non-EXCLUSIVE</span><span class="lux-card__name">Licensing Rights</span></h3>
+                    <span class="lux-card__hint">Details</span>
+                  </div>
+                </div>
+                <div class="lux-card__face lux-card__back">
+                  <span class="lux-card__stripe"></span>
+                  <p class="lux-card__kind">Non-EXCLUSIVE Licensing Rights</p>
+                  <p>A Mobile Operator may offer ARoL service in the market it operates in, with quarterly Licensing Rights fees.</p>
+                  <p class="lux-card__note lux-card__note--yes">Non-EXCLUSIVE Ownership Rights Business Agreement could co-exist.</p>
+                </div>
               </div>
             </div>
+            <button class="lux-card__toggle" type="button" aria-pressed="false"><span class="sr-only">Show details: Non-EXCLUSIVE Licensing Rights</span></button>
           </article>
         </div>
       </div>
@@ -442,48 +494,43 @@
   </main>
 
   <!-- Contact -->
-  <footer class="footer" id="contact">
+  <footer class="contact" id="contact">
+    <span class="contact__bg" aria-hidden="true">ARoL</span>
     <div class="container">
-      <h2 class="footer__title">Contact us …</h2>
-      <ul class="contacts">
-        <li class="contact">
-          <span class="contact__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg>
-          </span>
-          <span class="contact__text">
-            <span class="sr-only">Phone:</span>
-            <a href="tel:+21694131727">+216 94 131 727</a> | <a href="tel:+15149093234">+1 (514) 909 3234</a>
-          </span>
-        </li>
-        <li class="contact">
-          <span class="contact__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>
-          </span>
-          <span class="contact__text">
-            <span class="sr-only">WhatsApp:</span>
-            <a href="https://wa.me/21694131727" target="_blank" rel="noopener">+216 94 131 727</a>
-          </span>
-        </li>
-        <li class="contact">
-          <span class="contact__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1.4 2L12 12.4 19.6 7H4.4zM20 8.6l-7.4 5.2a1 1 0 0 1-1.2 0L4 8.6V17h16V8.6z"/></svg>
-          </span>
-          <span class="contact__text">
-            <span class="sr-only">Email:</span>
-            <a href="mailto:info@arolservice.com">info@arolservice.com</a>
-          </span>
-        </li>
-      </ul>
-    </div>
-    <div class="footer__bottom">
-      <div class="container"><span data-year>2026</span> © All rights reserved by ARoL Service</div>
+      <header class="section-head reveal">
+        <p class="eyebrow">05 — Get in touch</p>
+        <h2 class="display display--xl">Contact <em>us …</em></h2>
+      </header>
+      <div class="ccards" data-stagger>
+        <div class="ccard reveal" data-tilt>
+          <span class="ccard__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z"/></svg></span>
+          <span class="ccard__label">Phone</span>
+          <span class="ccard__value"><a href="tel:+21694131727">+216 94 131 727</a></span>
+          <span class="ccard__value"><a href="tel:+15149093234">+1 (514) 909 3234</a></span>
+        </div>
+        <a class="ccard reveal" href="https://wa.me/21694131727" target="_blank" rel="noopener" data-tilt>
+          <span class="ccard__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></span>
+          <span class="ccard__label">WhatsApp</span>
+          <span class="ccard__value">+216 94 131 727</span>
+        </a>
+        <a class="ccard reveal" href="mailto:info@arolservice.com" data-tilt>
+          <span class="ccard__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1.4 2L12 12.4 19.6 7H4.4zM20 8.6l-7.4 5.2a1 1 0 0 1-1.2 0L4 8.6V17h16V8.6z"/></svg></span>
+          <span class="ccard__label">Email</span>
+          <span class="ccard__value">info@arolservice.com</span>
+        </a>
+      </div>
+      <div class="footer-bar">
+        <span class="logo-gold footer-bar__logo" role="img" aria-label="ARoL Service"></span>
+        <p><span data-year>2026</span> © All rights reserved by ARoL Service</p>
+        <a class="footer-bar__top" href="#home">Back to top
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+        </a>
+      </div>
     </div>
   </footer>
 
-  <button class="to-top" type="button" aria-label="Back to top" data-to-top>
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-  </button>
-
   <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/land.js" defer></script>
+  <script src="assets/js/globe.js" defer></script>
 </body>
 </html>

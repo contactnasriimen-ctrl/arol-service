@@ -1,64 +1,36 @@
-/* ARoL Service – page behaviour */
+/* ARoL Service – page behaviour (luxury edition) */
 (() => {
   'use strict';
 
+  document.documentElement.classList.add('js');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const noHover = window.matchMedia('(hover: none)');
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const INTRO_MS = reduceMotion ? 0 : 1350;
 
-  /* ---------- Sticky header ---------- */
-  const shell = document.querySelector('.header-shell');
-  const header = document.getElementById('site-header');
-  const toTop = document.querySelector('[data-to-top]');
-
-  function measureHeader() {
-    const stuck = header.classList.contains('is-stuck');
-    header.classList.remove('is-stuck');
-    shell.style.height = header.offsetHeight + 'px';
-    if (stuck) header.classList.add('is-stuck');
-  }
-
-  function onScroll() {
-    const y = window.scrollY;
-    const top = shell.offsetTop;
-    const stuck = header.classList.contains('is-stuck');
-    if (!stuck && y > top + shell.offsetHeight + 40) {
-      header.classList.add('is-stuck', 'is-entering');
-    } else if (stuck && y <= top) {
-      header.classList.remove('is-stuck', 'is-entering');
-    }
-    toTop.classList.toggle('is-visible', y > 600);
-  }
-
-  header.addEventListener('animationend', () => header.classList.remove('is-entering'));
-  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }));
-
-  measureHeader();
+  /* ---------- Header ---------- */
+  const siteTop = document.querySelector('[data-site-top]');
+  const onScroll = () => siteTop.classList.toggle('is-scrolled', window.scrollY > 40);
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', measureHeader);
-  document.fonts?.ready.then(measureHeader);
 
-  /* ---------- Mobile navigation ---------- */
-  const toggle = document.querySelector('.nav-toggle');
-  const nav = document.getElementById('site-nav');
-
+  /* ---------- Mobile menu ---------- */
+  const burger = document.querySelector('[data-burger]');
+  const menu = document.querySelector('[data-menu]');
   function setMenu(open) {
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    nav.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.classList.toggle('is-open', open);
+    document.body.classList.toggle('is-locked', open);
   }
-  toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
-  nav.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+  burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
+  menu.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && nav.classList.contains('is-open')) { setMenu(false); toggle.focus(); }
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) { setMenu(false); burger.focus(); }
   });
-  document.addEventListener('click', e => {
-    if (nav.classList.contains('is-open') && !header.contains(e.target)) setMenu(false);
-  });
+  window.matchMedia('(min-width: 1181px)').addEventListener('change', e => { if (e.matches) setMenu(false); });
 
   /* ---------- Active nav link ---------- */
-  const links = [...nav.querySelectorAll('a')];
-  const targets = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const links = [...document.querySelectorAll('.nav a')];
   const spy = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
@@ -68,118 +40,199 @@
       });
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
-  targets.forEach(t => spy.observe(t));
+  links.forEach(a => { const t = document.querySelector(a.getAttribute('href')); if (t) spy.observe(t); });
 
-  /* ---------- Reveal on scroll ---------- */
+  /* ---------- Reveal on scroll + counters ---------- */
+  document.querySelectorAll('[data-stagger]').forEach(group => {
+    [...group.children].forEach((el, i) => el.style.setProperty('--i', i % 5));
+  });
+
+  function countUp(el) {
+    const num = el.querySelector('[data-count]');
+    if (!num) return;
+    const target = Number(num.dataset.count);
+    const start = performance.now();
+    const tick = now => {
+      const p = Math.min((now - start) / 1800, 1);
+      num.textContent = Math.round(target * (1 - Math.pow(1 - p, 4)));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    num.textContent = '0';
+    requestAnimationFrame(tick);
+  }
+
   const revealables = document.querySelectorAll('.reveal');
   if (reduceMotion || !('IntersectionObserver' in window)) {
     revealables.forEach(el => el.classList.add('is-visible'));
   } else {
     const io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        countUp(entry.target);
+        io.unobserve(entry.target);
       });
-    }, { threshold: .15 });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     revealables.forEach(el => io.observe(el));
   }
 
-  /* ---------- Hero slider ---------- */
-  const hero = document.querySelector('[data-slider]');
-  const slides = [...hero.querySelectorAll('.slide')];
-  const dots = [...hero.querySelectorAll('.hero__dots button')];
-  const INTERVAL = 6500;
-  let current = 0;
-  let timer = null;
+  /* ---------- Hero taglines ---------- */
+  const hero = document.querySelector('.hero');
+  const heroText = hero.querySelector('.hero__text');
+  const taglines = [...hero.querySelectorAll('.tagline')];
+  const currentEl = hero.querySelector('[data-current]');
+  const progressEl = hero.querySelector('[data-progress]');
+  const INTERVAL = 7000;
+
+  // Wrap every word of the headings in a mask so it can slide in
+  function wrapWord(content, i) {
+    const outer = document.createElement('span');
+    const inner = document.createElement('span');
+    outer.className = 'w';
+    inner.style.setProperty('--i', i);
+    inner.append(content);
+    outer.append(inner);
+    return outer;
+  }
+  taglines.forEach(tagline => {
+    const heading = tagline.querySelector('h1, h2');
+    let i = 0;
+    (function walk(node) {
+      [...node.childNodes].forEach(child => {
+        if (child.nodeType === Node.TEXT_NODE) {
+          const frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            frag.append(/^\s+$/.test(part) ? document.createTextNode(' ') : wrapWord(part, i++));
+          });
+          child.replaceWith(frag);
+        } else if (child.nodeName === 'SMALL') {
+          child.replaceWith(wrapWord(child.cloneNode(true), i++));
+        } else if (child.nodeType === Node.ELEMENT_NODE) {
+          walk(child);
+        }
+      });
+    })(heading);
+  });
+
+  let index = 0;
+  let elapsed = -INTRO_MS;
+  let paused = false;
+  let heroVisible = true;
 
   function show(n) {
-    const next = (n + slides.length) % slides.length;
-    if (next === current) return;
-    [current, next].forEach((i, k) => {
-      const active = k === 1;
-      slides[i].classList.toggle('is-active', active);
-      slides[i].toggleAttribute('inert', !active);
-      if (active) slides[i].removeAttribute('aria-hidden');
-      else slides[i].setAttribute('aria-hidden', 'true');
-      if (active) dots[i].setAttribute('aria-current', 'true');
-      else dots[i].removeAttribute('aria-current');
-    });
-    current = next;
+    const next = (n + taglines.length) % taglines.length;
+    if (next === index) return;
+    const prev = taglines[index];
+    prev.classList.remove('is-active');
+    prev.classList.add('is-leaving');
+    clearTimeout(prev._leave);
+    prev._leave = setTimeout(() => prev.classList.remove('is-leaving'), 1000);
+
+    const incoming = taglines[next];
+    clearTimeout(incoming._leave);
+    incoming.classList.remove('is-leaving');
+    incoming.classList.add('is-active');
+    taglines.forEach((t, i) => t.setAttribute('aria-hidden', String(i !== next)));
+
+    index = next;
+    elapsed = 0;
+    currentEl.textContent = String(next + 1).padStart(2, '0');
   }
 
-  function stop() { clearInterval(timer); timer = null; }
-  function play() {
-    if (reduceMotion) return;
-    stop();
-    timer = setInterval(() => show(current + 1), INTERVAL);
-  }
-  function step(delta) { show(current + delta); play(); }
+  // Play the first headline once the intro curtain lifts
+  taglines[0].classList.remove('is-active');
+  taglines.slice(1).forEach(t => t.setAttribute('aria-hidden', 'true'));
+  setTimeout(() => taglines[0].classList.add('is-active'), INTRO_MS);
 
-  hero.querySelector('[data-prev]').addEventListener('click', () => step(-1));
-  hero.querySelector('[data-next]').addEventListener('click', () => step(1));
-  dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); play(); }));
-
-  hero.addEventListener('mouseenter', stop);
-  hero.addEventListener('mouseleave', play);
-  hero.addEventListener('focusin', stop);
-  hero.addEventListener('focusout', e => { if (!hero.contains(e.relatedTarget)) play(); });
-  hero.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft') step(-1);
-    if (e.key === 'ArrowRight') step(1);
-  });
-  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : play()));
-
-  let startX = null;
-  hero.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') startX = e.clientX; });
-  hero.addEventListener('pointerup', e => {
-    if (startX === null) return;
-    const dx = e.clientX - startX;
-    startX = null;
-    if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
-  });
-  hero.addEventListener('pointercancel', () => { startX = null; });
-
-  play();
-
-  /* ---------- Slide 2 mosaic (stand-in for the people collage) ---------- */
-  const mosaic = document.querySelector('[data-mosaic]');
-  if (mosaic) {
-    let seed = 7;
-    const rand = () => {
-      seed = (seed + 0x6d2b79f5) | 0;
-      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
-      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-    const palette = ['#c9a88a', '#8a6f5a', '#d9c2a7', '#6f8fa8', '#a8b8c8', '#e3d5c4', '#5d6b7a',
-      '#b48c6e', '#9fb0a0', '#e8e0d6', '#7a5c48', '#c2cfd9', '#d6b49a', '#4f6378', '#efe6da'];
-    const pick = () => palette[Math.floor(rand() * palette.length)];
-    const frag = document.createDocumentFragment();
-    for (let i = 0; i < 170; i++) {
-      const tile = document.createElement('span');
-      const r = rand();
-      if (r < .1) tile.style.gridArea = 'span 2 / span 2';
-      else if (r < .2) tile.style.gridRow = 'span 2';
-      tile.style.background = `linear-gradient(${Math.floor(rand() * 360)}deg, ${pick()}, ${pick()})`;
-      frag.appendChild(tile);
+  let last = performance.now();
+  (function loop(now) {
+    const dt = now - last;
+    last = now;
+    if (!paused && heroVisible && !document.hidden && !reduceMotion) {
+      elapsed += dt;
+      if (elapsed >= INTERVAL) show(index + 1);
     }
-    mosaic.appendChild(frag);
+    progressEl.style.transform = `scaleX(${Math.max(0, Math.min(elapsed / INTERVAL, 1))})`;
+    requestAnimationFrame(loop);
+  })(last);
+
+  hero.querySelector('[data-prev]').addEventListener('click', () => show(index - 1));
+  hero.querySelector('[data-next]').addEventListener('click', () => show(index + 1));
+  heroText.addEventListener('mouseenter', () => { paused = true; });
+  heroText.addEventListener('mouseleave', () => { paused = false; });
+  heroText.addEventListener('focusin', () => { paused = true; });
+  heroText.addEventListener('focusout', e => { if (!heroText.contains(e.relatedTarget)) paused = false; });
+  heroText.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') show(index - 1);
+    if (e.key === 'ArrowRight') show(index + 1);
+  });
+  new IntersectionObserver(([entry]) => { heroVisible = entry.isIntersecting; }).observe(hero);
+
+  /* ---------- Pointer depth: hero floats, tilt cards, luxury cards ---------- */
+  if (finePointer && !reduceMotion) {
+    hero.addEventListener('pointermove', e => {
+      const r = hero.getBoundingClientRect();
+      hero.style.setProperty('--px', (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
+      hero.style.setProperty('--py', (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
+    });
+    hero.addEventListener('pointerleave', () => {
+      hero.style.setProperty('--px', 0);
+      hero.style.setProperty('--py', 0);
+    });
+
+    const track = (el, max, extra) => {
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        el.classList.add('is-tilting');
+        el.style.setProperty('--rx', `${((0.5 - y) * max).toFixed(2)}deg`);
+        el.style.setProperty('--ry', `${((x - 0.5) * max).toFixed(2)}deg`);
+        el.style.setProperty('--mx', `${(x * 100).toFixed(1)}%`);
+        el.style.setProperty('--my', `${(y * 100).toFixed(1)}%`);
+        if (extra) el.style.setProperty('--mxn', x.toFixed(3));
+      });
+      el.addEventListener('pointerleave', () => {
+        el.classList.remove('is-tilting');
+        el.style.setProperty('--rx', '0deg');
+        el.style.setProperty('--ry', '0deg');
+      });
+    };
+    document.querySelectorAll('[data-tilt]').forEach(el => track(el, el.classList.contains('pcard') ? 12 : 7));
+    document.querySelectorAll('.lux-card').forEach(card => track(card, 16, true));
   }
 
-  /* ---------- Touch: tap to reveal patent status / flip agreements ---------- */
-  const patents = [...document.querySelectorAll('.patent')];
-  patents.forEach(card => card.addEventListener('click', () => {
-    if (!noHover.matches) return;
-    const open = !card.classList.contains('is-open');
-    patents.forEach(c => c.classList.remove('is-open'));
-    card.classList.toggle('is-open', open);
-    if (!open) card.blur();
-  }));
-
-  document.querySelectorAll('.deal').forEach(deal => {
-    // Keyboard focus flips via :focus-visible; touch needs an explicit toggle.
-    deal.addEventListener('click', () => { if (noHover.matches) deal.classList.toggle('is-flipped'); });
-    deal.addEventListener('blur', () => deal.classList.remove('is-flipped'));
+  /* ---------- Agreement cards: flip ---------- */
+  document.querySelectorAll('.lux-card').forEach(card => {
+    const toggle = card.querySelector('.lux-card__toggle');
+    toggle.addEventListener('click', () => {
+      const on = !card.classList.contains('is-flipped');
+      card.classList.toggle('is-flipped', on);
+      toggle.setAttribute('aria-pressed', String(on));
+    });
   });
+
+  /* ---------- Patent footprint: region filter ---------- */
+  const filterButtons = [...document.querySelectorAll('[data-filter]')];
+  const patentCards = [...document.querySelectorAll('.pcard')];
+  filterButtons.forEach(button => button.addEventListener('click', () => {
+    const filter = button.dataset.filter;
+    filterButtons.forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+    let n = 0;
+    patentCards.forEach(card => {
+      const match = filter === 'all' || card.dataset.region === filter;
+      card.hidden = !match;
+      card.classList.remove('is-entering');
+      if (!match) return;
+      card.classList.add('is-visible');
+      if (reduceMotion) return;
+      card.style.setProperty('--n', n++);
+      void card.offsetWidth; // restart the entrance animation
+      card.classList.add('is-entering');
+      card.addEventListener('animationend', () => card.classList.remove('is-entering'), { once: true });
+    });
+  }));
 
   /* ---------- Footer year ---------- */
   const year = document.querySelector('[data-year]');
