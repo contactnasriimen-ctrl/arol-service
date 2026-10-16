@@ -37,6 +37,12 @@ npx serve .
 - Patent office logos are shown as text (abbreviation + office name).
 - Remove `<meta name="robots" content="noindex, nofollow">` once the site moves to arolservice.com.
 
+## Themes
+
+- **Light** (ivory, navy ink, deep gold, porcelain globe) is the default.
+- **Dark** (ink navy, champagne gold) via the sun/moon button in the header; the visitor's choice is kept in `localStorage` (`arol-theme`).
+- Colours are CSS variables: `:root` = light, `:root[data-theme="dark"]` = dark. The globe's palettes are `THEMES` in `assets/js/globe.js`; the agreement cards keep their own black/platinum finish in both themes.
+
 ## Notes
 
 - Respects `prefers-reduced-motion` (no intro, no autoplay, static globe).

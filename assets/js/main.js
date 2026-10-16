@@ -13,6 +13,21 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  /* ---------- Theme switch (light default, dark on request) ---------- */
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  function setTheme(theme, persist) {
+    document.documentElement.dataset.theme = theme;
+    themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
+    themeMeta.setAttribute('content', theme === 'dark' ? '#04060b' : '#f6f1e8');
+    if (persist) { try { localStorage.setItem('arol-theme', theme); } catch (e) { /* private mode */ } }
+    document.dispatchEvent(new CustomEvent('arol:theme', { detail: theme }));
+  }
+  setTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light', false);
+  themeToggle.addEventListener('click', () => {
+    setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark', true);
+  });
+
   /* ---------- Mobile menu ---------- */
   const burger = document.querySelector('[data-burger]');
   const menu = document.querySelector('[data-menu]');

@@ -1,7 +1,8 @@
 /* ARoL Service – 3D hero globe.
-   Gold dotted continents (assets/js/land.js), patent markers, light trails
-   from Tunisia and orbiting satellites. Three.js is loaded on demand; if it or
-   WebGL is unavailable the static SVG globe in the hero stays visible. */
+   Dotted continents (assets/js/land.js), patent markers, light trails from
+   Tunisia and orbiting satellites. Two looks: porcelain & gold (light theme)
+   and ink & gold (dark theme), switched live on the `arol:theme` event.
+   Three.js is loaded on demand; without it (or WebGL) the SVG fallback stays. */
 (() => {
   'use strict';
 
@@ -21,6 +22,26 @@
     tn: [34, 9.5], tr: [39, 35], ae: [24, 54], gb: [53, -1.5], us: [39, -98], wipo: [46.2, 6.1],
   };
   const HUB = 'tn';
+
+  // Colours are linear-ish RGB triplets for shaders, hex for basic materials
+  const THEMES = {
+    light: {
+      coreDeep: [0.975, 0.958, 0.925], coreRim: [0.80, 0.77, 0.72], coreGold: [0.72, 0.53, 0.22], coreGoldAmt: 0.45,
+      dotA: [0.09, 0.18, 0.34], dotB: [0.50, 0.37, 0.15], dotAlpha: 0.9, dotsAdditive: false,
+      arcBase: [0.62, 0.47, 0.22], arcHead: [0.36, 0.24, 0.05], arcBaseAlpha: 0.22,
+      atmo: [0.78, 0.64, 0.40], atmoAlpha: 0.3,
+      marker: 0x8a6122, markerHub: 0x0a2b49, glow: 0xd2ad62, ring: 0x9c7230,
+      orbit: 0xa77a32, orbitAlpha: 0.35, sat: 0x9c7230, satScale: 0.075, dust: 0xb08a45, dustAlpha: 0.45, additive: false,
+    },
+    dark: {
+      coreDeep: [0.014, 0.024, 0.055], coreRim: [0.07, 0.15, 0.32], coreGold: [0.85, 0.70, 0.42], coreGoldAmt: 0.6,
+      dotA: [0.62, 0.46, 0.22], dotB: [1.0, 0.90, 0.66], dotAlpha: 1.0, dotsAdditive: true,
+      arcBase: [0.78, 0.62, 0.32], arcHead: [1.0, 0.95, 0.82], arcBaseAlpha: 0.1,
+      atmo: [0.61, 0.62, 0.66], atmoAlpha: 0.42,
+      marker: 0xfff1cf, markerHub: 0xffffff, glow: 0xf3d394, ring: 0xf6e1a8,
+      orbit: 0xd9b871, orbitAlpha: 0.22, sat: 0xfff0cc, satScale: 0.16, dust: 0xe8cf95, dustAlpha: 0.55, additive: true,
+    },
+  };
 
   import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js')
     .then(init)
@@ -48,6 +69,8 @@
     stage.add(tilt);
     tilt.add(globe);
 
+    const v3 = a => new THREE.Vector3(...a);
+    const blendOf = additive => (additive ? THREE.AdditiveBlending : THREE.NormalBlending);
     const toVec = (lat, lon, r = R) => {
       const p = (lat * Math.PI) / 180, l = (lon * Math.PI) / 180;
       return new THREE.Vector3(Math.cos(p) * Math.sin(l) * r, Math.sin(p) * r, Math.cos(p) * Math.cos(l) * r);
@@ -59,8 +82,8 @@
       const g = c.getContext('2d');
       const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
       grad.addColorStop(0, 'rgba(255,255,255,1)');
-      grad.addColorStop(0.22, 'rgba(255,238,200,.6)');
-      grad.addColorStop(1, 'rgba(255,214,150,0)');
+      grad.addColorStop(0.22, 'rgba(255,255,255,.6)');
+      grad.addColorStop(1, 'rgba(255,255,255,0)');
       g.fillStyle = grad;
       g.fillRect(0, 0, 64, 64);
       return new THREE.CanvasTexture(c);
@@ -75,43 +98,71 @@
         gl_Position = projectionMatrix * mv;
       }`;
 
-    // Dark core: hides the far side and adds a fine gold rim
-    globe.add(new THREE.Mesh(
-      new THREE.SphereGeometry(R * 0.985, 96, 96),
-      new THREE.ShaderMaterial({
-        vertexShader: fresnelVertex,
-        fragmentShader: `
-          varying vec3 vN; varying vec3 vV;
-          void main() {
-            float f = 1.0 - max(dot(vN, vV), 0.0);
-            vec3 c = mix(vec3(0.014, 0.024, 0.055), vec3(0.07, 0.15, 0.32), pow(f, 2.4));
-            c += vec3(0.85, 0.70, 0.42) * pow(f, 7.0) * 0.6;
-            gl_FragColor = vec4(c, 1.0);
-          }`,
-      }),
-    ));
+    // Core sphere: hides the far side; soft key light + gold rim
+    const coreMat = new THREE.ShaderMaterial({
+      uniforms: { uDeep: { value: new THREE.Vector3() }, uRim: { value: new THREE.Vector3() }, uGold: { value: new THREE.Vector3() }, uGoldAmt: { value: 0 } },
+      vertexShader: fresnelVertex,
+      fragmentShader: `
+        uniform vec3 uDeep; uniform vec3 uRim; uniform vec3 uGold; uniform float uGoldAmt;
+        varying vec3 vN; varying vec3 vV;
+        void main() {
+          float f = 1.0 - max(dot(vN, vV), 0.0);
+          float key = 0.86 + 0.14 * max(dot(vN, normalize(vec3(-0.5, 0.6, 0.8))), 0.0);
+          vec3 c = mix(uDeep, uRim, pow(f, 2.4)) * key;
+          c = mix(c, uGold, pow(f, 7.0) * uGoldAmt);
+          gl_FragColor = vec4(c, 1.0);
+        }`,
+    });
+    globe.add(new THREE.Mesh(new THREE.SphereGeometry(R * 0.985, 96, 96), coreMat));
 
-    // Atmosphere: back faces, brightest at the limb, fading outwards
-    stage.add(new THREE.Mesh(
-      new THREE.SphereGeometry(R * 1.2, 64, 64),
-      new THREE.ShaderMaterial({
-        vertexShader: fresnelVertex,
-        fragmentShader: `
-          varying vec3 vN; varying vec3 vV;
-          void main() {
-            float d = clamp(-dot(vN, vV), 0.0, 1.0);
-            float i = clamp(pow(d / 0.55, 3.4), 0.0, 1.0);
-            vec3 c = mix(vec3(0.30, 0.48, 0.95), vec3(0.92, 0.74, 0.42), 0.55);
-            gl_FragColor = vec4(c, i * 0.42);
-          }`,
-        side: THREE.BackSide,
-        blending: THREE.AdditiveBlending,
-        transparent: true,
-        depthWrite: false,
-      }),
-    ));
+    // Atmosphere: back faces, strongest at the limb, fading outwards
+    const atmoMat = new THREE.ShaderMaterial({
+      uniforms: { uColor: { value: new THREE.Vector3() }, uAlpha: { value: 0.4 } },
+      vertexShader: fresnelVertex,
+      fragmentShader: `
+        uniform vec3 uColor; uniform float uAlpha;
+        varying vec3 vN; varying vec3 vV;
+        void main() {
+          float d = clamp(-dot(vN, vV), 0.0, 1.0);
+          float i = clamp(pow(d / 0.55, 3.4), 0.0, 1.0);
+          gl_FragColor = vec4(uColor, i * uAlpha);
+        }`,
+      side: THREE.BackSide,
+      transparent: true,
+      depthWrite: false,
+    });
+    stage.add(new THREE.Mesh(new THREE.SphereGeometry(R * 1.2, 64, 64), atmoMat));
 
     // Land dots on the same Fibonacci layout used to build the mask
+    const dotsMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uScale: { value: 15 * DPR },
+        uColA: { value: new THREE.Vector3() }, uColB: { value: new THREE.Vector3() }, uAlpha: { value: 1 },
+      },
+      vertexShader: `
+        attribute float aSize; attribute float aShade;
+        uniform float uScale;
+        varying float vShade; varying float vFacing;
+        void main() {
+          vec4 mv = modelViewMatrix * vec4(position, 1.0);
+          vFacing = dot(normalize(normalMatrix * normalize(position)), normalize(-mv.xyz));
+          vShade = aShade;
+          gl_PointSize = aSize * uScale / -mv.z;
+          gl_Position = projectionMatrix * mv;
+        }`,
+      fragmentShader: `
+        uniform vec3 uColA; uniform vec3 uColB; uniform float uAlpha;
+        varying float vShade; varying float vFacing;
+        void main() {
+          float d = length(gl_PointCoord - 0.5);
+          if (d > 0.5) discard;
+          float a = smoothstep(0.5, 0.1, d);
+          vec3 col = mix(uColA, uColB, vShade * vShade);
+          gl_FragColor = vec4(col, a * uAlpha * (0.2 + 0.8 * smoothstep(0.0, 0.5, vFacing)));
+        }`,
+      transparent: true,
+      depthWrite: false,
+    });
     {
       const bits = Uint8Array.from(atob(LAND.bits), ch => ch.charCodeAt(0));
       const n = LAND.n;
@@ -130,69 +181,45 @@
       geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
       geo.setAttribute('aSize', new THREE.Float32BufferAttribute(size, 1));
       geo.setAttribute('aShade', new THREE.Float32BufferAttribute(shade, 1));
-      globe.add(new THREE.Points(geo, new THREE.ShaderMaterial({
-        uniforms: { uScale: { value: 15 * DPR } },
-        vertexShader: `
-          attribute float aSize; attribute float aShade;
-          uniform float uScale;
-          varying float vShade; varying float vFacing;
-          void main() {
-            vec4 mv = modelViewMatrix * vec4(position, 1.0);
-            vFacing = dot(normalize(normalMatrix * normalize(position)), normalize(-mv.xyz));
-            vShade = aShade;
-            gl_PointSize = aSize * uScale / -mv.z;
-            gl_Position = projectionMatrix * mv;
-          }`,
-        fragmentShader: `
-          varying float vShade; varying float vFacing;
-          void main() {
-            float d = length(gl_PointCoord - 0.5);
-            if (d > 0.5) discard;
-            float a = smoothstep(0.5, 0.1, d);
-            vec3 gold = mix(vec3(0.62, 0.46, 0.22), vec3(1.0, 0.90, 0.66), vShade);
-            gl_FragColor = vec4(gold, a * (0.2 + 0.8 * smoothstep(0.0, 0.5, vFacing)));
-          }`,
-        transparent: true,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-      })));
+      globe.add(new THREE.Points(geo, dotsMat));
     }
 
-    // Patent markers: bright core, soft glow, expanding ring
-    const pulses = [];
+    // Patent markers: core dot, soft glow, expanding ring
+    const pulses = [], markerDots = [], markerGlows = [];
     const ringGeo = new THREE.RingGeometry(0.02, 0.025, 48);
     const dotGeo = new THREE.SphereGeometry(0.014, 12, 12);
     for (const [code, [lat, lon]] of Object.entries(PATENTS)) {
       const isHub = code === HUB;
       const p = toVec(lat, lon, R * 1.004);
-      const outward = p.clone().multiplyScalar(2);
 
-      const dot = new THREE.Mesh(dotGeo, new THREE.MeshBasicMaterial({ color: isHub ? 0xffffff : 0xfff1cf }));
+      const dot = new THREE.Mesh(dotGeo, new THREE.MeshBasicMaterial());
       dot.position.copy(p);
+      dot.userData.hub = isHub;
       if (isHub) dot.scale.setScalar(1.6);
       globe.add(dot);
+      markerDots.push(dot);
 
-      const glow = new THREE.Sprite(new THREE.SpriteMaterial({
-        map: glowTexture, color: isHub ? 0xffe2a8 : 0xf3d394, blending: THREE.AdditiveBlending,
-        transparent: true, depthWrite: false, opacity: isHub ? 1 : 0.75,
-      }));
+      const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture, transparent: true, depthWrite: false }));
       glow.position.copy(p);
       glow.scale.setScalar(isHub ? 0.22 : 0.12);
+      glow.userData.hub = isHub;
       globe.add(glow);
+      markerGlows.push(glow);
 
-      const ring = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({
-        color: 0xf6e1a8, transparent: true, opacity: 0.8, side: THREE.DoubleSide,
-        depthWrite: false, blending: THREE.AdditiveBlending,
-      }));
+      const ring = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({ transparent: true, side: THREE.DoubleSide, depthWrite: false }));
       ring.position.copy(p);
-      ring.lookAt(outward);
+      ring.lookAt(p.clone().multiplyScalar(2));
       ring.userData = { phase: Math.random(), hub: isHub };
       globe.add(ring);
       pulses.push(ring);
     }
 
     // Light trails from the hub to every other office
-    const shared = { uTime: { value: 0 } };
+    const arcUniforms = {
+      uTime: { value: 0 },
+      uBase: { value: new THREE.Vector3() }, uHead: { value: new THREE.Vector3() }, uBaseAlpha: { value: 0.1 },
+    };
+    const arcMats = [];
     const hub = toVec(...PATENTS[HUB], 1);
     for (const [code, [lat, lon]] of Object.entries(PATENTS)) {
       if (code === HUB) continue;
@@ -211,24 +238,26 @@
       const geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
       geo.setAttribute('aT', new THREE.Float32BufferAttribute(ts, 1));
-      globe.add(new THREE.Line(geo, new THREE.ShaderMaterial({
-        uniforms: { uTime: shared.uTime, uOffset: { value: Math.random() }, uSpeed: { value: 0.12 + Math.random() * 0.1 } },
+      const mat = new THREE.ShaderMaterial({
+        uniforms: { ...arcUniforms, uOffset: { value: Math.random() }, uSpeed: { value: 0.12 + Math.random() * 0.1 } },
         vertexShader: `
           attribute float aT; varying float vT;
           void main() { vT = aT; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
         fragmentShader: `
-          uniform float uTime; uniform float uOffset; uniform float uSpeed; varying float vT;
+          uniform float uTime; uniform float uOffset; uniform float uSpeed;
+          uniform vec3 uBase; uniform vec3 uHead; uniform float uBaseAlpha;
+          varying float vT;
           void main() {
             float head = fract(uTime * uSpeed + uOffset) * 1.4 - 0.2;
             float d = head - vT;
             float trail = d >= 0.0 ? exp(-d * 10.0) : 0.0;
-            vec3 c = mix(vec3(0.78, 0.62, 0.32), vec3(1.0, 0.95, 0.82), trail);
-            gl_FragColor = vec4(c, 0.1 + trail * 0.9);
+            gl_FragColor = vec4(mix(uBase, uHead, trail), uBaseAlpha + trail * 0.9);
           }`,
         transparent: true,
         depthWrite: false,
-        blending: THREE.AdditiveBlending,
-      })));
+      });
+      arcMats.push(mat);
+      globe.add(new THREE.Line(geo, mat));
     }
 
     // Orbits with travelling satellites
@@ -243,20 +272,18 @@
       }
       const geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.Float32BufferAttribute(circle, 3));
-      holder.add(new THREE.Line(geo, new THREE.LineBasicMaterial({
-        color: 0xd9b871, transparent: true, opacity: 0.22, depthWrite: false,
-      })));
-      const sat = new THREE.Sprite(new THREE.SpriteMaterial({
-        map: glowTexture, color: 0xfff0cc, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false,
-      }));
+      const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ transparent: true, depthWrite: false }));
+      holder.add(line);
+      const sat = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture, transparent: true, depthWrite: false }));
       sat.scale.setScalar(0.16);
       holder.add(sat);
       tilt.add(holder);
-      orbits.push({ sat, radius, speed, angle: Math.random() * Math.PI * 2 });
+      orbits.push({ line, sat, radius, speed, angle: Math.random() * Math.PI * 2 });
     });
 
     // Gold dust
-    {
+    const dustMat = new THREE.PointsMaterial({ map: glowTexture, size: 0.05, sizeAttenuation: true, transparent: true, depthWrite: false });
+    const dust = (() => {
       const pos = [];
       for (let i = 0; i < 700; i++) {
         const v = new THREE.Vector3().randomDirection().multiplyScalar(2.2 + Math.random() * 2.6);
@@ -264,12 +291,54 @@
       }
       const geo = new THREE.BufferGeometry();
       geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-      const dust = new THREE.Points(geo, new THREE.PointsMaterial({
-        map: glowTexture, color: 0xe8cf95, size: 0.05, sizeAttenuation: true,
-        transparent: true, opacity: 0.55, depthWrite: false, blending: THREE.AdditiveBlending,
-      }));
-      stage.add(dust);
-      orbits.dust = dust;
+      const points = new THREE.Points(geo, dustMat);
+      stage.add(points);
+      return points;
+    })();
+
+    // Theme switch: colours + blending
+    function applyTheme(name) {
+      const t = THEMES[name] || THEMES.light;
+      coreMat.uniforms.uDeep.value.copy(v3(t.coreDeep));
+      coreMat.uniforms.uRim.value.copy(v3(t.coreRim));
+      coreMat.uniforms.uGold.value.copy(v3(t.coreGold));
+      coreMat.uniforms.uGoldAmt.value = t.coreGoldAmt;
+
+      atmoMat.uniforms.uColor.value.copy(v3(t.atmo));
+      atmoMat.uniforms.uAlpha.value = t.atmoAlpha;
+      atmoMat.blending = blendOf(t.additive);
+
+      dotsMat.uniforms.uColA.value.copy(v3(t.dotA));
+      dotsMat.uniforms.uColB.value.copy(v3(t.dotB));
+      dotsMat.uniforms.uAlpha.value = t.dotAlpha;
+      dotsMat.blending = blendOf(t.dotsAdditive);
+
+      arcUniforms.uBase.value.copy(v3(t.arcBase));
+      arcUniforms.uHead.value.copy(v3(t.arcHead));
+      arcUniforms.uBaseAlpha.value = t.arcBaseAlpha;
+      arcMats.forEach(m => { m.blending = blendOf(t.additive); });
+
+      markerDots.forEach(d => d.material.color.setHex(d.userData.hub ? t.markerHub : t.marker));
+      markerGlows.forEach(g => {
+        g.material.color.setHex(t.glow);
+        g.material.opacity = g.userData.hub ? 1 : (t.additive ? 0.75 : 0.55);
+        g.material.blending = blendOf(t.additive);
+      });
+      pulses.forEach(r => { r.material.color.setHex(t.ring); r.material.blending = blendOf(t.additive); });
+
+      orbits.forEach(o => {
+        o.line.material.color.setHex(t.orbit);
+        o.line.material.opacity = t.orbitAlpha;
+        o.sat.material.color.setHex(t.sat);
+        o.sat.scale.setScalar(t.satScale);
+        o.sat.material.blending = blendOf(t.additive);
+      });
+      dustMat.color.setHex(t.dust);
+      dustMat.opacity = t.dustAlpha;
+      dustMat.blending = blendOf(t.additive);
+
+      scene.traverse(obj => { if (obj.material) obj.material.needsUpdate = true; });
+      if (!running) render();
     }
 
     // Initial view: Europe / Africa / Middle East facing the camera
@@ -291,8 +360,6 @@
       else { stage.position.set(0, halfH * 0.42, 0); stage.userData.scale = 0.74; }
       if (reduceMotion) stage.scale.setScalar(stage.userData.scale);
     }
-    layout();
-    new ResizeObserver(() => { layout(); if (!running) render(); }).observe(canvas);
 
     // Pointer: parallax everywhere in the hero, drag-to-spin on the canvas
     const pointer = { x: 0, y: 0 };
@@ -330,7 +397,7 @@
       raf = requestAnimationFrame(frame);
       const dt = Math.min(clock.getDelta(), 0.05);
       elapsed += dt;
-      shared.uTime.value = elapsed;
+      arcUniforms.uTime.value = elapsed;
 
       // entrance: grow in and settle
       const intro = Math.min(elapsed / 2.6, 1);
@@ -353,7 +420,7 @@
         o.angle += o.speed * dt;
         o.sat.position.set(Math.cos(o.angle) * o.radius, Math.sin(o.angle) * o.radius, 0);
       }
-      orbits.dust.rotation.y += 0.01 * dt;
+      dust.rotation.y += 0.01 * dt;
 
       render();
     }
@@ -369,6 +436,10 @@
       cancelAnimationFrame(raf);
     }
 
+    layout();
+    applyTheme(document.documentElement.dataset.theme);
+    document.addEventListener('arol:theme', e => applyTheme(e.detail));
+    new ResizeObserver(() => { layout(); if (!running) render(); }).observe(canvas);
     new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       visible ? start() : stop();

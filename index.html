@@ -7,7 +7,16 @@
   <meta name="description" content="ARoL Service informs a caller about the roaming callee's current country and local time, and lets the caller assume roaming charges. Patented in 20 countries across 4 continents.">
   <!-- Preview on GitHub Pages: remove noindex once the site moves to arolservice.com -->
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#04060b">
+  <meta name="theme-color" content="#f6f1e8">
+  <script>
+    /* Theme before first paint: light by default, dark if the visitor chose it */
+    (function () {
+      var t = 'light';
+      try { t = localStorage.getItem('arol-theme') === 'dark' ? 'dark' : 'light'; } catch (e) {}
+      document.documentElement.dataset.theme = t;
+      if (t === 'dark') document.querySelector('meta[name="theme-color"]').setAttribute('content', '#04060b');
+    })();
+  </script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="ARoL Service – Limiting calls at inconvenient times">
   <meta property="og:description" content="Informing the caller about the roaming callee's current location and the local time there.">
@@ -53,6 +62,10 @@
           <a href="#agreements">ARoL Business Agreements</a>
         </nav>
         <a class="btn btn--ghost btn--sm header__cta" href="#contact">Contact us …</a>
+        <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Dark theme" data-theme-toggle>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+        </button>
         <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu" data-burger>
           <span></span><span></span>
         </button>
